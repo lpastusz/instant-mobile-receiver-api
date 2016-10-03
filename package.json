@@ -1,0 +1,8 @@
+{
+	"name": "instant-mobile-receiver-api",
+	"version": "0.0.1",
+	"author": "Lukas Pastuszek <lukas.pastuszek@gmail.com",
+  	"dependencies": {
+    	"restify": "^4.1.1"
+  	}
+}
