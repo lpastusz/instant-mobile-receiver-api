@@ -1,0 +1,4 @@
+default:
+  server:
+    name: 'instant-mobile-receiver-api'
+    port: 8000

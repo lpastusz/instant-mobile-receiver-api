@@ -26,4 +26,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 EXPOSE 8000
-CMD [ "node", "app.js" ]
+EXPOSE 8080
+EXPOSE 5858
+
+CMD [ "node", "src/app.js" ]
