@@ -1,4 +1,12 @@
 default:
   server:
-    name: 'instant-mobile-receiver-api'
-    port: 8000
+    name: rest-api
+    port: 8008
+  AWS:
+    accessKeyId: xxx
+    secretAccessKey: xxx
+    region: eu-central-1
+    endpoint: http://local-db:8000
+  authentication:
+    web_client_secret: xxx
+    rest_api_secret: xxx

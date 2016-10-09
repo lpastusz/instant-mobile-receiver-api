@@ -6,20 +6,31 @@ services:
     command: node src/app.js
     image: instant-mobile-receiver-api
     ports:
-      - "8000:8000"
+      - "8008:8008"
       - "8080:8080"
       - "5858:5858"
+      - "443:443"
     volumes:
      - .:/usr/src/app      
+    links:
+     - local-db
 
   rest-api-debug:
     build: .
     command: node-debug --web-host 0.0.0.0 src/app.js
     image: instant-mobile-receiver-api
     ports:
-      - "8000:8000"
+      - "8008:8008"
       - "8080:8080"
       - "5858:5858"
+      - "443:443"
     volumes:
      - .:/usr/src/app      
+
+  local-db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    ports:
+     - "8000:8000"
 
