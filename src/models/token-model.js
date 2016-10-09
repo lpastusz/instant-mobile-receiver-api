@@ -76,11 +76,9 @@ module.exports.insertToken = (tokenData) => {
 			}
 
 			if (!data) {
-				console.log('Token not created');
 				return reject('Token not created');
 			}
 
-			console.log('Token created');
 			return resolve(data);
 
 		});
@@ -107,11 +105,9 @@ module.exports.removeToken = (token) => {
 			}
 
 			if (!data) {
-				console.log('Token not deleted');
 				return reject('Token not deleted');
 			}
 
-			console.log('Token deleted');
 			return resolve(data);
 
 		});
