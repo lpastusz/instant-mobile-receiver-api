@@ -6,6 +6,8 @@ module.exports = (app) => {
 
 
 
-	require('./user-routes')(app, '/user');
+	require('./user-routes')(app, '/api/user');
+
+	require('./transfer-routes')(app, '/api/transfer');
 
 }

@@ -14,23 +14,19 @@ module.exports.registerUser = (email, password) => {
 		let salt =  EncryptGenerator.generateSalt(16);
 		let passwordHash = EncryptGenerator.generatePasswordHash(password, salt);
 
-		if (token) {
+		let user = {
+			email: email,
+			security: {
+				salt: salt,
+				passwordHash: passwordHash
+			}
+		};
 
-			let user = {
-				email: email,
-				security: {
-					salt: salt,
-					passwordHash: passwordHash
-				}
-			};
+		UserModel.createUser(user)
 
-			UserModel.createUser(user)
+		.then(resolve)
 
-			.then(resolve)
-
-			.catch(reject);
-
-		}
+		.catch(reject);
 
 	});
 

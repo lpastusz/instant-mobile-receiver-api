@@ -12,12 +12,46 @@ var server = restify.createServer({
   version: require("../package.json").version,
   key: fs.readFileSync(__dirname + '/../server-key.pem'),
   certificate: fs.readFileSync(__dirname + '/../server-cert.pem'),
-  formatters: {
-    "application/hal+json": function (req, res, body, cb) {
-      return res.formatters["application/json"](req, res, body, cb);
-    }
+
+});
+
+server.pre(restify.CORS({
+  origins: ['https://localhost:3000'],
+  credentials: false,
+  headers: ['authorization']
+}));
+
+restify.CORS.ALLOW_HEADERS.push("authorization");
+server.on( "MethodNotAllowed", function(req, res) {
+  if(req.method.toUpperCase() === "OPTIONS" ) {
+    // Send the CORS headers
+    res.header("Access-Control-Allow-Headers", restify.CORS.ALLOW_HEADERS.join( ", " ));
+    res.send(204);
+  }
+  else {
+    res.send(new restify.MethodNotAllowedError());
   }
 });
+
+// Add headers
+server.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'https://localhost:3000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 
 AWS.config.update({
     accessKeyId: config.AWS.accessKeyId,
@@ -27,43 +61,12 @@ AWS.config.update({
 });
 
 var RESOURCES = Object.freeze({
-    INITIAL: "/",
-    TOKEN: "/user/login",
-    PUBLIC: "/public",
-    SECRET: "/secret"
+    TOKEN: "/api/user/login",
 });
 
 server.use(restify.authorizationParser());
 server.use(restify.bodyParser());
 restifyOAuth2.ropc(server, { tokenEndpoint: RESOURCES.TOKEN, hooks: hooks });
-
-
-server.get(RESOURCES.SECRET, function (req, res) {
-    if (!req.username) {
-        return res.sendUnauthenticated();
-    }
-    var response = {
-        "users with a token": "have access to this secret data",
-        _links: {
-            self: { href: RESOURCES.SECRET },
-            parent: { href: RESOURCES.INITIAL }
-        }
-    };
-
-    res.contentType = "application/hal+json";
-    res.send(response);
-});
-
-server.post('/close', function(req, res){
-    res.send(200);
-    server.close();
-});
-
-
-
-
-
-
 
 
 server.listen(config.server.port, function() {

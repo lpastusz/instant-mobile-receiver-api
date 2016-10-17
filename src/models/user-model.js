@@ -14,10 +14,11 @@ module.exports.createUser = (user) => {
 		}, (err, data) => {
 
 			if (err) {
+				console.log(err);
 				return reject(err);
 			}
 
-			if (!data || !data.Item) {
+			if (!data) {
 				return reject('User not created');
 			}
 
