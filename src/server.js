@@ -13,7 +13,7 @@ var server = restify.createServer({
 });
 
 server.pre(restify.CORS({
-  origins: ['https://localhost:3000'],
+  origins: ['http://localhost:3000', 'http://http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'],
   credentials: false,
   headers: ['authorization']
 }));
