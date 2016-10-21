@@ -7,7 +7,7 @@ var restify = require('restify')
 	, config = require('config')
     , AWS = require('aws-sdk');
 
-var allowedOrigins = ['http://localhost:3000', 'http://http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'];
+var allowedOrigins = ['http://localhost:3000', 'http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'];
 
 var server = restify.createServer({
 	name: config.server.name,
