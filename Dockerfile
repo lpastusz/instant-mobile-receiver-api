@@ -20,15 +20,15 @@ ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 RUN npm install -g node-inspector
 
-
 # Create app directory
 RUN mkdir -p /usr/src/app
 
-COPY . /usr/src/app
-
-CMD ["npm" "install"]
-
 WORKDIR /usr/src/app
+
+COPY package.json /usr/src/app/
+RUN npm install
+
+COPY . /usr/src/app
 
 EXPOSE 8008 8000 8080 5858 443
 
