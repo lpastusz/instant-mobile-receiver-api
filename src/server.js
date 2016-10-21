@@ -7,7 +7,7 @@ var restify = require('restify')
 	, config = require('config')
     , AWS = require('aws-sdk');
 
-var allowedOrigins = ['http://localhost:3000', 'http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'];
+var allowedOrigins = ['http://localhost:3000', 'http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com'];
 
 var server = restify.createServer({
 	name: config.server.name,
@@ -58,8 +58,8 @@ server.use(function (req, res, next) {
 
 
 AWS.config.update({
-    accessKeyId: process.env.accessKeyId,
-    secretAccessKey: process.env.secretAccessKey,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: config.AWS.region,
     endpoint: config.AWS.endpoint
 });
