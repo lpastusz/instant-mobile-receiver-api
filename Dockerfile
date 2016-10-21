@@ -25,8 +25,8 @@ RUN npm install -g node-inspector
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-EXPOSE 8000
 EXPOSE 8008
+EXPOSE 8000
 EXPOSE 8080
 EXPOSE 5858
 EXPOSE 443
