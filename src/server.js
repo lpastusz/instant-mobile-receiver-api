@@ -7,13 +7,15 @@ var restify = require('restify')
 	, config = require('config')
     , AWS = require('aws-sdk');
 
+var allowedOrigins = ['http://localhost:3000', 'http://http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'];
+
 var server = restify.createServer({
 	name: config.server.name,
   version: require("../package.json").version,
 });
 
 server.pre(restify.CORS({
-  origins: ['http://localhost:3000', 'http://http://instant-mobile-receiver-front.s3-website-us-west-2.amazonaws.com/'],
+  origins: allowedOrigins,
   credentials: false,
   headers: ['authorization']
 }));
@@ -32,21 +34,26 @@ server.on( "MethodNotAllowed", function(req, res) {
 
 // Add headers
 server.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://localhost:3000');
+    
+  
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  var origin = req.headers.origin;
+  if(allowedOrigins.indexOf(origin) > -1){
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-    // Pass to next layer of middleware
-    next();
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
 });
 
 
