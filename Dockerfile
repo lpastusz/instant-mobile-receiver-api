@@ -23,6 +23,11 @@ RUN npm install -g node-inspector
 
 # Create app directory
 RUN mkdir -p /usr/src/app
+
+COPY . /usr/src/app
+
+CMD ["npm" "install"]
+
 WORKDIR /usr/src/app
 
 EXPOSE 8008 8000 8080 5858 443
