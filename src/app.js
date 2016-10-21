@@ -10,8 +10,6 @@ var restify = require('restify')
 var server = restify.createServer({
 	name: config.server.name,
   version: require("../package.json").version,
-  key: fs.readFileSync(__dirname + '/../server-key.pem'),
-  certificate: fs.readFileSync(__dirname + '/../server-cert.pem'),
 });
 
 server.pre(restify.CORS({
