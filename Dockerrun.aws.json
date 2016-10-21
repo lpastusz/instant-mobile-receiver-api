@@ -5,5 +5,5 @@
       "ContainerPort": "8008"
     }
   ],
-  "Logging": "/var/log/"
+  "Logging": "/var/log/instant-mobile-receiver-api"
 }
