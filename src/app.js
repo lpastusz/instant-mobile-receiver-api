@@ -12,7 +12,6 @@ var server = restify.createServer({
   version: require("../package.json").version,
   key: fs.readFileSync(__dirname + '/../server-key.pem'),
   certificate: fs.readFileSync(__dirname + '/../server-cert.pem'),
-
 });
 
 server.pre(restify.CORS({
@@ -54,8 +53,8 @@ server.use(function (req, res, next) {
 
 
 AWS.config.update({
-    accessKeyId: config.AWS.accessKeyId,
-    secretAccessKey: config.AWS.secretAccessKey,
+    accessKeyId: process.env.accessKeyId,
+    secretAccessKey: process.env.secretAccessKey,
     region: config.AWS.region,
     endpoint: config.AWS.endpoint
 });

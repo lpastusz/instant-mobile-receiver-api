@@ -4,6 +4,8 @@
   "author": "Lukas Pastuszek <lukas.pastuszek@gmail.com",
   "dependencies": {
     "aws-sdk": "^2.6.6",
+    "busboy": "^0.2.13",
+    "connect-multiparty": "^2.0.0",
     "node-cache": "^4.1.0",
     "restify": "^4.1.1",
     "restify-oauth2": "^4.0.4",

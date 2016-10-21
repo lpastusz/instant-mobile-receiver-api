@@ -3,10 +3,8 @@ default:
     name: rest-api
     port: 8008
   AWS:
-    accessKeyId: xxx
-    secretAccessKey: xxx
-    region: eu-central-1
-    endpoint: http://local-db:8000
+    region: eu-west-1
+    endpoint: dynamodb.eu-west-1.amazonaws.com
   authentication:
     web_client_secret: xxx
     rest_api_secret: xxx

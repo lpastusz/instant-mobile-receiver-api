@@ -11,7 +11,8 @@ services:
       - "5858:5858"
       - "443:443"
     volumes:
-     - .:/usr/src/app      
+     - .:/usr/src/app  
+    env_file: .env 
     links:
      - local-db
 
@@ -26,7 +27,8 @@ services:
       - "443:443"
     volumes:
      - .:/usr/src/app      
-
+    env_file: .env 
+    
   local-db:
     build:
       context: .
