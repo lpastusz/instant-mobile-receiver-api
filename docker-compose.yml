@@ -3,7 +3,7 @@ version: '2.0'
 services: 
   rest-api:
     build: .
-    command: node src/app.js
+    command: node src/server.js
     image: instant-mobile-receiver-api
     ports:
       - "8008:8008"
@@ -18,7 +18,7 @@ services:
 
   rest-api-debug:
     build: .
-    command: node-debug --web-host 0.0.0.0 src/app.js
+    command: node-debug --web-host 0.0.0.0 src/server.js
     image: instant-mobile-receiver-api
     ports:
       - "8008:8008"

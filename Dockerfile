@@ -34,4 +34,4 @@ COPY . /usr/src/app
 
 EXPOSE 8008 8000 8080 5858 443
 
-CMD [ "node", "src/app.js" ]
+CMD [ "node", "src/server.js" ]
