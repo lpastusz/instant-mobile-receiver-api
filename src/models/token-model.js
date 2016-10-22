@@ -3,6 +3,38 @@ const
 	, tokenTableName = require('db').getTableName('token');
 
 
+module.exports.getForEmail = (email) => {
+
+	return new Promise(function(resolve, reject) {
+
+		dbClient.query({
+			TableName: tokenTableName,
+			IndexName: "email-index",
+    	KeyConditionExpression: "#email = :email",
+	    ExpressionAttributeNames:{
+	        "#email": "email"
+	    },
+	    ExpressionAttributeValues: {
+	        ":email": email
+	    }
+		}, (err, data) => {
+
+			if (err) {
+				return reject(err);
+			}
+
+			if (!data || !data.Items) {
+				return reject("No devices found");
+			}
+
+			return resolve(data);
+
+		});
+
+	});
+
+}
+
 module.exports.findEmailFromToken = (tokenHash) => {
 
   return new Promise(function(resolve, reject) {

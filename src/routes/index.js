@@ -10,4 +10,6 @@ module.exports = (app) => {
 
 	require('./transfer-routes')(app, '/api/transfer');
 
+	require('./device-routes')(app, '/api/device');
+
 }
