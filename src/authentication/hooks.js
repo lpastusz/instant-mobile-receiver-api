@@ -23,7 +23,16 @@ exports.grantUserToken = function (credentials, req, cb) {
 
         if (result === true) {
 
-            dbAuth.generateAndStoreToken(credentials.username)
+            let mobileData = {};
+            if (req.body.deviceId) {
+                mobileData = {
+                    deviceId: req.body.deviceId,
+                    deviceName: req.body.deviceName,
+                    firebaseToken: req.body.firebaseToken
+                };
+            }
+
+            dbAuth.generateAndStoreToken(credentials.username, mobileData)
             .then((token) => {
 
                return cb(null, token);

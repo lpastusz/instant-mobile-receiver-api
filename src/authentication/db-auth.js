@@ -13,6 +13,9 @@ const
 var clients = {
     web_client: { 
     	secret: config.authentication.web_client_secret 
+    },
+    android_client: {
+    	secret: config.authentication.android_client_secret
     }
 };
 
@@ -49,7 +52,7 @@ module.exports.validateUserCredentials = function(email, password) {
 
 }
 
-module.exports.generateAndStoreToken = function(username) {
+module.exports.generateAndStoreToken = function(username, mobileDeviceData) {
 
 	return new Promise(function(resolve, reject) {
 
@@ -74,14 +77,30 @@ module.exports.generateAndStoreToken = function(username) {
 		loopForUniqueToken().then((token) => {
 			resolve(token);
 
-			let tokenData = {
+			let tokenDataCache = {
 				tokenHash: token,
-				email: username
+				email: username,
 			};
 
-			TokenModel.insertToken(tokenData);
+			let tokenDataModel = {};
 
-			TokenCache.storeToken(tokenData);
+			if (mobileDeviceData) {
+				tokenDataModel = {
+					tokenHash: token,
+					email: username,
+					mobileDevice: mobileDeviceData
+				};
+			}
+			else {
+				tokenDataModel = {
+					tokenHash: token,
+					email: username
+				};
+			}
+
+			TokenModel.insertToken(tokenDataModel);
+
+			TokenCache.storeToken(tokenDataCache);
 		});
 
 	});

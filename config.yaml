@@ -8,3 +8,4 @@ default:
   authentication:
     web_client_secret: xxx
     rest_api_secret: xxx
+    android_client_secret: xxx
