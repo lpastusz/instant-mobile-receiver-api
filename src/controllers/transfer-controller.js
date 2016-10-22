@@ -3,6 +3,7 @@
 const
 		ContentModel = require('../models/content-model')
 	,	TokenModel = require('../models/token-model')
+	,	Firebase = require('firebase')
 	, _ = require('lodash');
 
 module.exports.uploadText = (email, text, deviceId) => {
@@ -15,7 +16,11 @@ module.exports.uploadText = (email, text, deviceId) => {
 
 			.then(firebaseToken => ContentModel.save(email, firebaseToken, text))
 
-			.then(resolve)
+			.then((data) => {
+
+				Firebase.sendNotification(data.firebaseToken, "New instant message", data.text);
+				return resolve(data);
+			})
 
 			.catch(reject);
 

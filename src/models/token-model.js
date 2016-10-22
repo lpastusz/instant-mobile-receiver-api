@@ -111,7 +111,7 @@ module.exports.insertToken = (tokenData) => {
 				return reject('Token not created');
 			}
 
-			return resolve(data);
+			return resolve(tokenData);
 
 		});
 

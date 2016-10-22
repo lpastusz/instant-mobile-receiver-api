@@ -10,16 +10,17 @@ module.exports.save = (email, firebaseToken, text) => {
 	return new Promise(function(resolve, reject) {
 
 		let id = generateUniqueId(email);
+		let item = {
+			id: id,
+			email: email,
+			firebaseToken: firebaseToken,
+			text: text
+		};
 
 		dbClient.put({
 			ConditionExpression: 'attribute_not_exists(id)',
 			TableName: contentTableName,
-			Item: {
-				id: id,
-				email: email, 
-				firebaseToken: firebaseToken,
-				text: text
-			}
+			Item: item
 		}, (err, data) => {
 
 			if (err) {
@@ -31,7 +32,7 @@ module.exports.save = (email, firebaseToken, text) => {
 				return reject('Content not created');
 			}
 
-			return resolve(data);
+			return resolve(item);
 
 		});
 
