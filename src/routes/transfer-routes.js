@@ -1,3 +1,5 @@
+"use strict";
+
 const
 		TransferController = require('../controllers/transfer-controller')
 	,	fs = require('fs')
@@ -8,9 +10,11 @@ module.exports = (app, routePrefix) => {
 
 	app.post(routePrefix + '/text', (req, res, next) => {
 
-		console.log(req.username);
+		let username = req.username;
+		let text = req.params.text;
+		let deviceId = req.params.deviceId;
 
-		TransferController.uploadText(req.params.text)
+		TransferController.uploadText(username, text, deviceId)
 			
 		.then((data) => {	
 			res.json({
