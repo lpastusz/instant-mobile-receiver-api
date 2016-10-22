@@ -8,7 +8,8 @@ _.each(db.tableDefinitions, table => {
     TableName: table.tableName,
     KeySchema: table.keySchema,
     AttributeDefinitions: table.attributeDefinitions,
-    ProvisionedThroughput: table.provisionedThroughput
+    ProvisionedThroughput: table.provisionedThroughput,
+    GlobalSecondaryIndexes: table.GlobalSecondaryIndexes
   };
 
   db.dbConnection.createTable(params, (err, data) => {

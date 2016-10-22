@@ -1,9 +1,36 @@
+"use strict";
 
+const
+		ContentModel = require('../models/content-model')
+	,	TokenModel = require('../models/token-model')
+	, _ = require('lodash');
 
-module.exports.uploadText = (username, text, deviceId) => {
+module.exports.uploadText = (email, text, deviceId) => {
 
-	console.log(username);
-	console.log(text);
-	console.log(deviceId);
+	return new Promise(function(resolve, reject) {
+
+			TokenModel.getForEmail(email)
+
+			.then(data => getFirebaseTokenFromTokenModel(data, deviceId))
+
+			.then(firebaseToken => ContentModel.save(email, firebaseToken, text))
+
+			.then(resolve)
+
+			.catch(reject);
+
+	});
+
+}
+
+function getFirebaseTokenFromTokenModel(data, deviceId) {
+
+	return new Promise(function(resolve, reject) {
+
+		let index = _.findIndex(data.Items, (item) => item.mobileDevice && item.mobileDevice.deviceId == deviceId);
+		let obj = _.nth(data.Items, index);
+		return resolve(obj.mobileDevice.firebaseToken);
+
+	});
 
 }
