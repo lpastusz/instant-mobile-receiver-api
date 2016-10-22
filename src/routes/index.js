@@ -12,4 +12,6 @@ module.exports = (app) => {
 
 	require('./device-routes')(app, '/api/device');
 
+	require('./content-routes')(app, '/api/content');
+
 }

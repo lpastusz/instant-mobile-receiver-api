@@ -5,7 +5,7 @@ const
 	, contentTableName = require('db').getTableName('content');
 
 
-module.exports.save = (email, firebaseToken, text) => {
+module.exports.save = (email, deviceId, firebaseToken, text) => {
 
 	return new Promise(function(resolve, reject) {
 
@@ -14,6 +14,7 @@ module.exports.save = (email, firebaseToken, text) => {
 			id: id,
 			email: email,
 			firebaseToken: firebaseToken,
+			deviceId: deviceId,
 			text: text
 		};
 
@@ -33,6 +34,38 @@ module.exports.save = (email, firebaseToken, text) => {
 			}
 
 			return resolve(item);
+
+		});
+
+	});
+
+}
+
+module.exports.getByEmail = (email) => {
+
+	return new Promise(function(resolve, reject) {
+
+		dbClient.query({
+			TableName: contentTableName,
+			IndexName: "email-index",
+    	KeyConditionExpression: "#email = :email",
+	    ExpressionAttributeNames:{
+	        "#email": "email"
+	    },
+	    ExpressionAttributeValues: {
+	        ":email": email
+	    }
+		}, (err, data) => {
+
+			if (err) {
+				return reject(err);
+			}
+
+			if (!data || !data.Items) {
+				return reject("No content found");
+			}
+
+			return resolve(data);
 
 		});
 
