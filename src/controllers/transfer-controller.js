@@ -19,7 +19,7 @@ module.exports.uploadText = (email, text, deviceId) => {
 			.then((data) => {
 
 				if (data.firebaseToken) {
-					Firebase.sendNotification(data.firebaseToken, "New instant message", data.text);	
+					Firebase.sendNotification(data.id, data.firebaseToken, "New instant message", data.text);	
 				}
 				return resolve(data);
 			})
