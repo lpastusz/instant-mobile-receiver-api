@@ -20,7 +20,6 @@ exports.grantUserToken = function (credentials, req, cb) {
     dbAuth.validateUserCredentials(credentials.username, credentials.password)
 
     .then((result) => {
-
         if (result === true) {
 
             let mobileData = {};
@@ -34,7 +33,6 @@ exports.grantUserToken = function (credentials, req, cb) {
 
             dbAuth.generateAndStoreToken(credentials.username, mobileData)
             .then((token) => {
-
                return cb(null, token);
 
             });
@@ -42,7 +40,6 @@ exports.grantUserToken = function (credentials, req, cb) {
         }
 
     })
-
     .catch((err) => {
         return cb(null, false);
     });

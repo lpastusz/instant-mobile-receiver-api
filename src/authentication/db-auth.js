@@ -41,6 +41,9 @@ module.exports.validateUserCredentials = function(email, password) {
 			if (data.security.passwordHash === EncryptGenerator.generatePasswordHash(password, salt)) {
 				return resolve(true);
 			}
+			else {
+				return reject(false);
+			}
 		})
 
 		.catch((err) => {

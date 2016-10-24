@@ -25,10 +25,12 @@ function extractMobileDataFromItems(data) {
 
 		var result = [];
 		data.Items.forEach(function(item) {
-		    result.push({
-		    	deviceId: item.mobileDevice.deviceId,
-		    	deviceName: item.mobileDevice.deviceName
-		    });
+				if (item.mobileDevice.deviceId) {
+			    result.push({
+			    	deviceId: item.mobileDevice.deviceId,
+			    	deviceName: item.mobileDevice.deviceName
+			    });					
+				}
 		});
 
 		return resolve(result);
