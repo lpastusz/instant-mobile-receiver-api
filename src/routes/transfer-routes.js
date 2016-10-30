@@ -2,6 +2,7 @@
 
 const
 		TransferController = require('../controllers/transfer-controller')
+	, FileTransferController = require('../controllers/file-transfer-controller')
 	,	fs = require('fs')
 	, BusBoy = require('busboy')
 	, restify = require('restify');
@@ -35,35 +36,21 @@ module.exports = (app, routePrefix) => {
 	});
 
 
-	app.post(routePrefix + '/file', uploadFile);    
 
-	function uploadFile(req, res, next) { 
-	console.log('begin');
-	var busboy = new Busboy({ headers: req.headers });
-	req.pipe(busboy);
-	busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-	    console.log('file');
-	    audioFileName = filename + ".ogg";
-	    var saveTo = path.join("audio_temp", path.basename(audioFileName));
-	    file.pipe(fs.createWriteStream(saveTo));
-	});
-	busboy.on('finish', function() {
-	   	console.log('finish');
-	});
+	app.post(routePrefix + '/file/text', (req, res, next) => {
 
-	}
+		let username = req.username;
 
-/*
-	app.post(routePrefix + '/file', (req, res, next) => {
+		let fileUrl = req.params.fileUrl;
+		let fileName = req.params.fileName;
+		let deviceId = req.params.deviceId;
 
-		console.log(req.params);
-
-		TransferController.uploadText("text")
+		FileTransferController.handleTextFile(username, fileUrl, fileName, deviceId)
 			
 		.then((data) => {	
 			res.json({
 				response: 'success',
-				action: routePrefix + '/text',
+				action: routePrefix + '/file/text',
 				data: data
 			});
 		})
@@ -71,11 +58,12 @@ module.exports = (app, routePrefix) => {
 		.catch((err) => {
 			res.json({
 				response: 'error',
-				action: routePrefix + '/text',
+				action: routePrefix + '/file/text',
 				error: err
 			});
 		});
 
 	});
-*/
+
+
 };

@@ -6,12 +6,12 @@
     "aws-sdk": "^2.6.6",
     "busboy": "^0.2.13",
     "connect-multiparty": "^2.0.0",
+    "lodash": "~4.16.4",
     "node-cache": "^4.1.0",
+    "request": "~2.75.0",
     "restify": "^4.1.1",
     "restify-oauth2": "^4.0.4",
     "underscore": "^1.8.3",
-    "yaml-config": "^0.3.0",
-    "lodash": "~4.16.4",
-    "request": "~2.75.0"
+    "yaml-config": "^0.3.0"
   }
 }

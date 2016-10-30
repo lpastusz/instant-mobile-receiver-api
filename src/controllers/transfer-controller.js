@@ -14,12 +14,12 @@ module.exports.uploadText = (email, text, deviceId) => {
 
 			.then(data => getFirebaseTokenFromTokenModel(data, deviceId))
 
-			.then(firebaseToken => ContentModel.save(email, deviceId, firebaseToken, text))
+			.then(firebaseToken => ContentModel.saveText(email, deviceId, firebaseToken, text))
 
 			.then((data) => {
 
 				if (data.firebaseToken) {
-					Firebase.sendNotification(data.id, data.firebaseToken, "New instant message", data.text);	
+					Firebase.sendNotification(data.id, data.firebaseToken, "Instant message", data.text);	
 				}
 				return resolve(data);
 			})
